@@ -99,9 +99,9 @@ module Music
       def calculate_frequency(*args)
         case args.size
         when 1
-          letter, accidental, octave = parse_note_string(args.first)
+          letter, accidental, octave = parse_note_string(args[0])
         when 2
-          letter, accidental, octave = parse_note_string(args.first, args.second)
+          letter, accidental, octave = parse_note_string(args[0], args[1])
         when 3
           letter, accidental, octave = args
         else
