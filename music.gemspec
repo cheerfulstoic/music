@@ -4,7 +4,7 @@ require "music/version"
 
 Gem::Specification.new do |s|
   # Basic Info
-  s.name          = "music-utils"
+  s.name          = "music"
   s.version       = Music::VERSION
   s.platform      = Gem::Platform::RUBY
   s.authors       = ["Brian Underwood"]
