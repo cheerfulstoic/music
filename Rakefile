@@ -1,53 +1,26 @@
-# encoding: utf-8
-
-require 'rubygems'
-require 'bundler'
-begin
-  Bundler.setup(:default, :development)
-rescue Bundler::BundlerError => e
-  $stderr.puts e.message
-  $stderr.puts "Run `bundle install` to install missing gems"
-  exit e.status_code
-end
 require 'rake'
+require 'rspec/core/rake_task'
 
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "music"
-  gem.homepage = "http://github.com/cheerfulstoic/music"
-  gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "bunderwood@rbmtechnologies.com"
-  gem.authors = ["Brian Underwood"]
-  # dependencies defined in Gemfile
-end
-Jeweler::RubygemsDotOrgTasks.new
+task :default => [:spec]
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+desc "Run all test"
+task :test => [:spec]
+
+# RSpec tasks
+desc "Run all examples"
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.ruby_opts = '-I lib'
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rspec_opts = ['--color --format doc']
+  spec.fail_on_error = false
 end
 
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
+# Gems tasks
+require "bundler"
+Bundler::GemHelper.install_tasks
+
+desc "Clean automatically generated files"
+task :clean do
+  FileUtils.rm_rf "pkg"
 end
 
-task :default => :test
-
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "music #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
