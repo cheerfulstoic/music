@@ -93,7 +93,10 @@ module Music
       end
 
       def frequency_adjustment(start_frequency, distance)
-        (start_frequency * (2.0 ** (distance.to_f / NOTES.size))).round(2)
+        result = (start_frequency * (2.0 ** (distance.to_f / NOTES.size)))
+
+        # Would like to use #round(2), but want to support Ruby 1.8
+        (result * 100.0).round / 100.0
       end
 
       def calculate_frequency(*args)
@@ -114,7 +117,10 @@ module Music
       end
 
       def calculate_note(frequency, give_flat = false)
-        distance = (NOTES.size * Math.log(frequency / 440.0, 2)).round
+        # Would like to use #log(frequency / 440.0, 2), but would like to support Ruby 1.8
+        frequency_log_base_2 = Math.log(frequency / 440.0) / Math.log(2)
+
+        distance = (NOTES.size * frequency_log_base_2).round
 
         index = 9 + distance # 9 is index for A
 
