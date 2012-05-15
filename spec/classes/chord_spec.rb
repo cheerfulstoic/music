@@ -28,27 +28,37 @@ describe Music::Chord do
   end
 
   describe '#describe' do
-    describe 'major chords' do
+    describe "triads" do
       it 'should recognize C major' do
         Chord.new(['C4', 'E4', 'G4']).describe.should == ['C', :major]
       end
-    end
 
-    describe 'minor chords' do
       it 'should recognize C minor' do
         Chord.new(['C4', 'Eb4', 'G4']).describe.should == ['C', :minor]
       end
-    end
 
-    describe 'diminished chords' do
       it 'should recognize C diminished' do
         Chord.new(['C4', 'Eb4', 'Gb4']).describe.should == ['C', :diminished]
       end
-    end
-
-    describe 'augmented chords' do
       it 'should recognize C augmented' do
         Chord.new(['C4', 'E4', 'G#4']).describe.should == ['C', :augmented]
+      end
+    end
+    describe "seven chords" do
+      it 'should recognize Cmaj7' do
+        Chord.new(['C4', 'E4', 'G4', 'B4']).describe.should == ['C', :major_7]
+      end
+      it 'should recognize Cmin7' do
+        Chord.new(['C4', 'Eb4', 'G4', 'Bb4']).describe.should == ['C', :minor_7]
+      end
+      it 'should recognize Cdim7' do
+        Chord.new(['C4', 'Eb4', 'Gb4', 'A4']).describe.should == ['C', :diminished_7]
+      end
+      it 'should recognize Cmin7b5' do
+        Chord.new(['C4', 'Eb4', 'Gb4', 'Bb4']).describe.should == ['C', :half_diminished_7]
+      end
+      it 'should recognize Caug7' do
+        Chord.new(['C4', 'E4', 'G#4', 'Bb4']).describe.should == ['C', :augmented_7]
       end
     end
   end

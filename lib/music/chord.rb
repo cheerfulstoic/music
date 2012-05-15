@@ -28,6 +28,16 @@ module Music
         :diminished
       when [4, 8]
         :augmented
+      when [4, 7, 11]
+        :major_7
+      when [3, 7, 10]
+        :minor_7
+      when [3, 6, 9]
+        :diminished_7
+      when [3, 6, 10]
+        :half_diminished_7
+      when [4, 8, 10]
+        :augmented_7
       end
 
       [@notes.first.letter, quality]
