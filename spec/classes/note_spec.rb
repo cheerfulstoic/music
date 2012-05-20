@@ -151,6 +151,48 @@ describe Music::Note do
     end
   end
 
+  describe 'interval descriptions' do
+    describe '#minor_third' do
+      Note.new('C4').minor_third.note_string.should == 'D#4'
+      Note.new('B4').minor_third.note_string.should == 'D5'
+    end
+
+    describe '#major_third' do
+      Note.new('C4').major_third.note_string.should == 'E4'
+      Note.new('B4').major_third.note_string.should == 'D#5'
+    end
+
+    describe '#diminished_fifth' do
+      Note.new('C4').diminished_fifth.note_string.should == 'F#4'
+      Note.new('B4').diminished_fifth.note_string.should == 'F5'
+    end
+
+    describe '#perfect_fifth' do
+      Note.new('C4').perfect_fifth.note_string.should == 'G4'
+      Note.new('B4').perfect_fifth.note_string.should == 'F#5'
+    end
+
+    describe '#augmented_fifth' do
+      Note.new('C4').augmented_fifth.note_string.should == 'G#4'
+      Note.new('B4').augmented_fifth.note_string.should == 'G5'
+    end
+
+    describe '#diminished_seventh' do
+      Note.new('C4').diminished_seventh.note_string.should == 'A4'
+      Note.new('B4').diminished_seventh.note_string.should == 'G#5'
+    end
+
+    describe '#minor_seventh' do
+      Note.new('C4').minor_seventh.note_string.should == 'A#4'
+      Note.new('B4').minor_seventh.note_string.should == 'A5'
+    end
+
+    describe '#major_seventh' do
+      Note.new('C4').major_seventh.note_string.should == 'B4'
+      Note.new('B4').major_seventh.note_string.should == 'A#5'
+    end
+  end
+
   describe ".calculate_frequency(letter, accidental, octave)" do
     {
       ['C', nil, 0] => 16.35,

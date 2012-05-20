@@ -54,6 +54,27 @@ module Music
       Note.note_distance(self.note_string, note.note_string)
     end
 
+    def adjust_by_semitones(interval)
+      Note.new(Note.frequency_adjustment(self.frequency, interval))
+    end
+
+    {
+      :minor_third => 3,
+      :major_third => 4,
+
+      :diminished_fifth => 6,
+      :perfect_fifth => 7,
+      :augmented_fifth => 8,
+
+      :diminished_seventh => 9,
+      :minor_seventh => 10,
+      :major_seventh => 11
+    }.each do |interval, semitones_count|
+      define_method interval do
+        adjust_by_semitones(semitones_count)
+      end
+    end
+
     class << self
       extend ActiveSupport::Memoizable
 
