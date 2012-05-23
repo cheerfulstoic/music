@@ -1,5 +1,18 @@
 module Music
   class Chord
+
+    def ==(other_chord)
+      return false if @notes.size != other_chord.notes.size
+
+      @notes.each_with_index do |note, i|
+        return false if note != other_chord.notes[i]
+      end
+
+      return true
+    end
+
+    attr_reader :notes
+
     def initialize(notes)
       @notes = notes.collect do |note|
         if note.is_a?(Note)
@@ -41,6 +54,18 @@ module Music
       end
 
       [@notes.first.letter, quality]
+    end
+
+    class << self
+      def parse_chord_string(chord_string, assumed_octave = nil)
+        if note_string_match = chord_string.match(/^([A-Ga-g])([#b]?)([^\d]*)(\d*)$/)
+          full_string, note, accidental, interval, octave = note_string_match.to_a
+
+          raise ArgumentError, 'No octave found and no octave assumed' if note.blank? && assumed_octave.nil?
+
+          Note.new(note + accidental + octave, assumed_octave).chord(interval)
+        end
+      end
     end
   end
 end

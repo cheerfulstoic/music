@@ -75,6 +75,93 @@ module Music
       end
     end
 
+    CHORD_INTERVALS = {
+      :minor => [:minor_third, :perfect_fifth],
+      :major => [:major_third, :perfect_fifth],
+      :diminished => [:minor_third, :diminished_fifth],
+      :augmented => [:major_third, :augmented_fifth],
+      :major_seventh => [:major_third, :perfect_fifth, :major_seventh],
+      :minor_seventh => [:minor_third, :perfect_fifth, :minor_seventh],
+      :diminished_seventh => [:minor_third, :diminished_fifth, :diminished_seventh],
+      :augmented_seventh => [:major_third, :augmented_fifth, :minor_seventh],
+      :half_diminished_seventh => [:minor_third, :diminished_fifth, :minor_seventh]
+    }
+
+    CHORD_ALIASES = {
+      :min => :minor,
+      :m => :minor,
+      :maj => :major,
+      :M => :major,
+      :dim => :diminished,
+      :aug => :augmented,
+      :'+' => :augmented,
+
+      :maj_seventh => :major_seventh,
+      :major_7 => :major_seventh,
+      :major_7th => :major_seventh,
+      :maj_7 => :major_seventh,
+      :maj_7th => :major_seventh,
+      :maj7 => :major_seventh,
+      :maj7th => :major_seventh,
+      :M7 => :major_seventh,
+
+      :min_seventh => :minor_seventh,
+      :minor_7 => :minor_seventh,
+      :minor_7th => :minor_seventh,
+      :min_7 => :minor_seventh,
+      :min_7th => :minor_seventh,
+      :min7 => :minor_seventh,
+      :min7th => :minor_seventh,
+      :m7 => :minor_seventh,
+
+      :dim_seventh => :diminished_seventh,
+      :diminished_7 => :diminished_seventh,
+      :diminished_7th => :diminished_seventh,
+      :dim_7 => :diminished_seventh,
+      :dim_7th => :diminished_seventh,
+      :dim7 => :diminished_seventh,
+      :dim7th => :diminished_seventh,
+      :d7 => :diminished_seventh,
+
+      :aug_seventh => :augmented_seventh,
+      :augmented_7 => :augmented_seventh,
+      :augmented_7th => :augmented_seventh,
+      :aug_7 => :augmented_seventh,
+      :aug_7th => :augmented_seventh,
+      :aug7 => :augmented_seventh,
+      :aug7th => :augmented_seventh,
+      :'+7' => :augmented_seventh,
+
+      :half_dim_seventh => :half_diminished_seventh,
+      :half_diminished_7 => :half_diminished_seventh,
+      :half_diminished_7th => :half_diminished_seventh,
+      :half_dim_7 => :half_diminished_seventh,
+      :half_dim_7th => :half_diminished_seventh,
+      :half_dim7 => :half_diminished_seventh,
+      :half_dim7th => :half_diminished_seventh,
+    }
+
+    def chord(description)
+      description = :major if description.blank?
+
+      description = description.to_s
+      description.downcase! unless ['M', 'M7'].include?(description)
+      description.gsub!(/[\s\-]+/, '_')
+      description = description.to_sym
+
+      intervals = CHORD_INTERVALS[description] || CHORD_INTERVALS[CHORD_ALIASES[description]]
+
+      if intervals
+        Chord.new([self] + intervals.collect {|interval| self.send(interval) })
+      end
+    end
+
+    (CHORD_INTERVALS.keys + CHORD_ALIASES.keys).each do |chord_description|
+      define_method "#{chord_description}_chord" do
+        self.chord(chord_description)
+      end
+    end
+
     class << self
       extend ActiveSupport::Memoizable
 

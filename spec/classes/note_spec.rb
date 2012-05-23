@@ -193,6 +193,207 @@ describe Music::Note do
     end
   end
 
+  describe 'chords from notes' do
+    c4 = Note.new('C4')
+    
+    c_minor = Chord.new(['C4', 'Eb4', 'G4'])
+    c_major = Chord.new(['C4', 'E4', 'G4'])
+    c_diminished = Chord.new(['C4', 'Eb4', 'Gb4'])
+    c_augmented = Chord.new(['C4', 'E4', 'G#4'])
+    c_major_seventh = Chord.new(['C4', 'E4', 'G4', 'B4'])
+    c_minor_seventh = Chord.new(['C4', 'Eb4', 'G4', 'Bb4'])
+    c_diminished_seventh = Chord.new(['C4', 'Eb4', 'Gb4', 'A4'])
+    c_augmented_seventh = Chord.new(['C4', 'E4', 'G#4', 'Bb4'])
+    c_half_diminished_seventh = Chord.new(['C4', 'Eb4', 'Gb4', 'Bb4'])
+
+    describe 'chords from notes' do
+      describe '#chord' do
+        it 'should recognize minor chords' do
+          c4.chord(:minor).should == c_minor
+          c4.chord('Minor').should == c_minor
+          c4.chord('minor').should == c_minor
+          c4.chord('min').should == c_minor
+          c4.chord('MIN').should == c_minor
+          c4.chord('m').should == c_minor
+        end
+
+        it 'should recognize major chords' do
+          c4.chord(:major).should == c_major
+          c4.chord('Major').should == c_major
+          c4.chord('major').should == c_major
+          c4.chord('maj').should == c_major
+          c4.chord('MAJ').should == c_major
+          c4.chord('M').should == c_major
+          c4.chord('').should == c_major
+        end
+
+        it 'should recognize diminished chords' do
+          c4.chord(:diminished).should == c_diminished
+          c4.chord('Diminished').should == c_diminished
+          c4.chord('diminished').should == c_diminished
+          c4.chord('dim').should == c_diminished
+          c4.chord('DIM').should == c_diminished
+        end
+
+        it 'should recognize augmented chords' do
+          c4.chord(:augmented).should == c_augmented
+          c4.chord('Augmented').should == c_augmented
+          c4.chord('augmented').should == c_augmented
+          c4.chord('aug').should == c_augmented
+          c4.chord('AUG').should == c_augmented
+          c4.chord('+').should == c_augmented
+        end
+
+        it 'should recognize major seventh chords' do
+          c4.chord(:major_seventh).should == c_major_seventh
+          c4.chord('major_seventh').should == c_major_seventh
+          c4.chord('major seventh').should == c_major_seventh
+          c4.chord('Major seventh').should == c_major_seventh
+          c4.chord('maj seventh').should == c_major_seventh
+          c4.chord('maj 7').should == c_major_seventh
+          c4.chord('maj 7th').should == c_major_seventh
+          c4.chord('maj7').should == c_major_seventh
+          c4.chord('maj7th').should == c_major_seventh
+          c4.chord('MAJ7').should == c_major_seventh
+          c4.chord('M7').should == c_major_seventh
+        end
+
+        it 'should recognize minor seventh chords' do
+          c4.chord(:minor_seventh).should == c_minor_seventh
+          c4.chord('minor_seventh').should == c_minor_seventh
+          c4.chord('minor seventh').should == c_minor_seventh
+          c4.chord('minor seventh').should == c_minor_seventh
+          c4.chord('min seventh').should == c_minor_seventh
+          c4.chord('min 7').should == c_minor_seventh
+          c4.chord('min 7th').should == c_minor_seventh
+          c4.chord('min7').should == c_minor_seventh
+          c4.chord('min7th').should == c_minor_seventh
+          c4.chord('min7').should == c_minor_seventh
+          c4.chord('m7').should == c_minor_seventh
+        end
+
+        it 'should recognize diminished seventh chords' do
+          c4.chord(:diminished_seventh).should == c_diminished_seventh
+          c4.chord('diminished_seventh').should == c_diminished_seventh
+          c4.chord('diminished seventh').should == c_diminished_seventh
+          c4.chord('diminished seventh').should == c_diminished_seventh
+          c4.chord('dim seventh').should == c_diminished_seventh
+          c4.chord('dim 7').should == c_diminished_seventh
+          c4.chord('dim 7th').should == c_diminished_seventh
+          c4.chord('dim7').should == c_diminished_seventh
+          c4.chord('dim7th').should == c_diminished_seventh
+          c4.chord('dim7').should == c_diminished_seventh
+          c4.chord('d7').should == c_diminished_seventh
+        end
+
+        it 'should recognize augmented seventh chords' do
+          c4.chord(:augmented_seventh).should == c_augmented_seventh
+          c4.chord('augmented_seventh').should == c_augmented_seventh
+          c4.chord('augmented seventh').should == c_augmented_seventh
+          c4.chord('augmented seventh').should == c_augmented_seventh
+          c4.chord('aug seventh').should == c_augmented_seventh
+          c4.chord('aug 7').should == c_augmented_seventh
+          c4.chord('aug 7th').should == c_augmented_seventh
+          c4.chord('aug7').should == c_augmented_seventh
+          c4.chord('aug7th').should == c_augmented_seventh
+          c4.chord('aug7').should == c_augmented_seventh
+          c4.chord('+7').should == c_augmented_seventh
+        end
+
+        it 'should recognize half diminished seventh chords' do
+          c4.chord(:half_diminished_seventh).should == c_half_diminished_seventh
+          c4.chord('half_diminished_7').should == c_half_diminished_seventh
+          c4.chord('half_diminished_7th').should == c_half_diminished_seventh
+          c4.chord('half-diminished seventh').should == c_half_diminished_seventh
+          c4.chord('half-diminished 7').should == c_half_diminished_seventh
+          c4.chord('half-diminished 7th').should == c_half_diminished_seventh
+          c4.chord('half_dim seventh').should == c_half_diminished_seventh
+          c4.chord('half_dim 7').should == c_half_diminished_seventh
+          c4.chord('half_dim 7th').should == c_half_diminished_seventh
+          c4.chord('half_dim7').should == c_half_diminished_seventh
+          c4.chord('half_dim7th').should == c_half_diminished_seventh
+          c4.chord('half_dim7').should == c_half_diminished_seventh
+        end
+      end
+
+      describe 'chord methods' do
+        it 'should have minor methods' do
+          c4.minor_chord.should == c_minor
+          c4.min_chord.should == c_minor
+          c4.m_chord.should == c_minor
+        end
+
+        it 'should have major methods' do
+          c4.major_chord.should == c_major
+          c4.maj_chord.should == c_major
+          c4.M_chord.should == c_major
+        end
+
+        it 'should have diminished methods' do
+          c4.diminished_chord.should == c_diminished
+          c4.dim_chord.should == c_diminished
+        end
+
+        it 'should have augmented methods' do
+          c4.augmented_chord.should == c_augmented
+          c4.aug_chord.should == c_augmented
+        end
+
+        it 'should have major seventh methods' do
+          c4.major_seventh_chord.should == c_major_seventh
+          c4.maj_seventh_chord.should == c_major_seventh
+          c4.maj_7_chord.should == c_major_seventh
+          c4.maj_7th_chord.should == c_major_seventh
+          c4.maj7_chord.should == c_major_seventh
+          c4.maj7th_chord.should == c_major_seventh
+          c4.M7_chord.should == c_major_seventh
+        end
+
+        it 'should have minor seventh methods' do
+          c4.minor_seventh_chord.should == c_minor_seventh
+          c4.min_seventh_chord.should == c_minor_seventh
+          c4.min_7_chord.should == c_minor_seventh
+          c4.min_7th_chord.should == c_minor_seventh
+          c4.min7_chord.should == c_minor_seventh
+          c4.min7th_chord.should == c_minor_seventh
+          c4.m7_chord.should == c_minor_seventh
+        end
+
+        it 'should have diminished seventh methods' do
+          c4.diminished_seventh_chord.should == c_diminished_seventh
+          c4.dim_seventh_chord.should == c_diminished_seventh
+          c4.dim_7_chord.should == c_diminished_seventh
+          c4.dim_7th_chord.should == c_diminished_seventh
+          c4.dim7_chord.should == c_diminished_seventh
+          c4.dim7th_chord.should == c_diminished_seventh
+          c4.d7_chord.should == c_diminished_seventh
+        end
+
+        it 'should have augmented seventh methods' do
+          c4.augmented_seventh_chord.should == c_augmented_seventh
+          c4.aug_seventh_chord.should == c_augmented_seventh
+          c4.aug_7_chord.should == c_augmented_seventh
+          c4.aug_7th_chord.should == c_augmented_seventh
+          c4.aug7_chord.should == c_augmented_seventh
+          c4.aug7th_chord.should == c_augmented_seventh
+          c4.send('+7_chord').should == c_augmented_seventh
+        end
+
+        it 'should have half diminished seventh methods' do
+          c4.half_diminished_seventh_chord.should == c_half_diminished_seventh
+          c4.half_diminished_7_chord.should == c_half_diminished_seventh
+          c4.half_diminished_7th_chord.should == c_half_diminished_seventh
+          c4.half_dim_seventh_chord.should == c_half_diminished_seventh
+          c4.half_dim_7_chord.should == c_half_diminished_seventh
+          c4.half_dim_7th_chord.should == c_half_diminished_seventh
+          c4.half_dim7_chord.should == c_half_diminished_seventh
+          c4.half_dim7th_chord.should == c_half_diminished_seventh
+        end
+      end
+    end
+
+  end
+
   describe ".calculate_frequency(letter, accidental, octave)" do
     {
       ['C', nil, 0] => 16.35,
@@ -243,6 +444,8 @@ describe Music::Note do
     end
   end
 
+  # TODO: Should return accurracy
+  # Thought: ((frequency off) / (distance to next note's frequency)) * 2.0?
   describe ".calculate_note(frequency)" do
     test_frequencies = {
       [16.35] => ['C', nil, 0],
