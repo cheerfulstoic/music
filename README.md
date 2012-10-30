@@ -44,7 +44,7 @@ Describe chords:
 TODOs:
 ======
 
- * Use the term musical term 'interval' instead of 'distance' in code
+ * Use the term musical term 'interval' or 'semitones' instead of 'distance' in code
 
 Contributing to music
 =====================
