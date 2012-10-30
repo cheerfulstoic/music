@@ -41,6 +41,11 @@ Describe chords:
 
 *For further usage, see the examples in the spec files*
 
+TODOs:
+======
+
+ * Use the term musical term 'interval' instead of 'distance' in code
+
 Contributing to music
 =====================
 
