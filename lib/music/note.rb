@@ -67,7 +67,7 @@ module Music
 
       :perfect_fourth => 5,
 
-      :diminished_fifth => 6,
+      :tritone => 6, :diminished_fifth => 6, :flat_fifth => 6, :augmented_fourth => 6,
       :perfect_fifth => 7,
       :augmented_fifth => 8,
 

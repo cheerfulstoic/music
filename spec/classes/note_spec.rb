@@ -151,67 +151,55 @@ describe Music::Note do
     end
   end
 
-  describe 'interval descriptions' do
-    describe '#minor_second' do
-      Note.new('C4').minor_second.note_string.should == 'C#4'
-      Note.new('B4').minor_second.note_string.should == 'C5'
-    end
+  describe 'interval calculations' do
+    let(:c4) { Note.new('C4') }
+    let(:b4) { Note.new('B4') }
+    
+    it { c4.should have_an_interval :minor_second, 'C#4' }
+    it { b4.should have_an_interval :minor_second, 'C5' }
 
-    describe '#major_second' do
-      Note.new('C4').major_second.note_string.should == 'D4'
-      Note.new('B4').major_second.note_string.should == 'C#5'
-    end
+    it { c4.should have_an_interval :major_second, 'D4' }
+    it { b4.should have_an_interval :major_second, 'C#5' }
 
-    describe '#minor_third' do
-      Note.new('C4').minor_third.note_string.should == 'D#4'
-      Note.new('B4').minor_third.note_string.should == 'D5'
-    end
 
-    describe '#major_third' do
-      Note.new('C4').major_third.note_string.should == 'E4'
-      Note.new('B4').major_third.note_string.should == 'D#5'
-    end
+    it { c4.should have_an_interval :minor_third, 'D#4' }
+    it { b4.should have_an_interval :minor_third, 'D5' }
 
-    describe '#perfect_fourth' do
-      Note.new('C4').perfect_fourth.note_string.should == 'F4'
-      Note.new('B4').perfect_fourth.note_string.should == 'E5'
-    end
+    it { c4.should have_an_interval :major_third, 'E4' }
+    it { b4.should have_an_interval :major_third, 'D#5' }
 
-    describe '#diminished_fifth' do
-      Note.new('C4').diminished_fifth.note_string.should == 'F#4'
-      Note.new('B4').diminished_fifth.note_string.should == 'F5'
-    end
+    it { c4.should have_an_interval :perfect_fourth, 'F4' }
+    it { b4.should have_an_interval :perfect_fourth, 'E5' }
 
-    describe '#perfect_fifth' do
-      Note.new('C4').perfect_fifth.note_string.should == 'G4'
-      Note.new('B4').perfect_fifth.note_string.should == 'F#5'
-    end
+    # Enharmonic equivalents
+    it { c4.should have_an_interval :tritone, 'F#4' }
+    it { b4.should have_an_interval :tritone, 'F5' }
+    it { c4.should have_an_interval :diminished_fifth, 'F#4' }
+    it { b4.should have_an_interval :diminished_fifth, 'F5' }
+    it { c4.should have_an_interval :flat_fifth, 'F#4' }
+    it { b4.should have_an_interval :flat_fifth, 'F5' }
+    it { c4.should have_an_interval :augmented_fourth, 'F#4' }
+    it { b4.should have_an_interval :augmented_fourth, 'F5' }
 
-    describe '#augmented_fifth' do
-      Note.new('C4').augmented_fifth.note_string.should == 'G#4'
-      Note.new('B4').augmented_fifth.note_string.should == 'G5'
-    end
+    it { c4.should have_an_interval :perfect_fifth, 'G4' }
+    it { b4.should have_an_interval :perfect_fifth, 'F#5' }
 
-    describe '#major_sixth' do
-      Note.new('C4').major_sixth.note_string.should == 'A4'
-      Note.new('B4').major_sixth.note_string.should == 'G#5'
-    end
+    it { c4.should have_an_interval :augmented_fifth, 'G#4' }
+    it { b4.should have_an_interval :augmented_fifth, 'G5' }
 
-    describe '#diminished_seventh' do
-      Note.new('C4').diminished_seventh.note_string.should == 'A4'
-      Note.new('B4').diminished_seventh.note_string.should == 'G#5'
-    end
+    it { c4.should have_an_interval :major_sixth, 'A4' }
+    it { b4.should have_an_interval :major_sixth, 'G#5' }
 
-    describe '#minor_seventh' do
-      Note.new('C4').minor_seventh.note_string.should == 'A#4'
-      Note.new('B4').minor_seventh.note_string.should == 'A5'
-    end
+    it { c4.should have_an_interval :diminished_seventh, 'A4' }
+    it { b4.should have_an_interval :diminished_seventh, 'G#5' }
 
-    describe '#major_seventh' do
-      Note.new('C4').major_seventh.note_string.should == 'B4'
-      Note.new('B4').major_seventh.note_string.should == 'A#5'
-    end
+    it { c4.should have_an_interval :minor_seventh, 'A#4' }
+    it { b4.should have_an_interval :minor_seventh, 'A5' }
+
+    it { c4.should have_an_interval :major_seventh, 'B4' }
+    it { b4.should have_an_interval :major_seventh, 'A#5' }
   end
+
 
   describe 'scales from notes (as scale key)' do
     describe '#major_scale' do
