@@ -59,20 +59,36 @@ module Music
     end
 
     {
+      :minor_second => 1,
+      :major_second => 2,
+
       :minor_third => 3,
       :major_third => 4,
+
+      :perfect_fourth => 5,
 
       :diminished_fifth => 6,
       :perfect_fifth => 7,
       :augmented_fifth => 8,
 
-      :diminished_seventh => 9,
+      :major_sixth => 9, :diminished_seventh => 9,
       :minor_seventh => 10,
       :major_seventh => 11
     }.each do |interval, semitones_count|
       define_method interval do
         adjust_by_semitones(semitones_count)
       end
+    end
+
+    def major_scale
+      [self,
+        self.major_second,
+        self.major_third,
+        self.perfect_fourth,
+        self.perfect_fifth,
+        self.major_sixth,
+        self.major_seventh,
+      ]
     end
 
     CHORD_INTERVALS = {

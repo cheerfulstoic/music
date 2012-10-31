@@ -152,6 +152,16 @@ describe Music::Note do
   end
 
   describe 'interval descriptions' do
+    describe '#minor_second' do
+      Note.new('C4').minor_second.note_string.should == 'C#4'
+      Note.new('B4').minor_second.note_string.should == 'C5'
+    end
+
+    describe '#major_second' do
+      Note.new('C4').major_second.note_string.should == 'D4'
+      Note.new('B4').major_second.note_string.should == 'C#5'
+    end
+
     describe '#minor_third' do
       Note.new('C4').minor_third.note_string.should == 'D#4'
       Note.new('B4').minor_third.note_string.should == 'D5'
@@ -160,6 +170,11 @@ describe Music::Note do
     describe '#major_third' do
       Note.new('C4').major_third.note_string.should == 'E4'
       Note.new('B4').major_third.note_string.should == 'D#5'
+    end
+
+    describe '#perfect_fourth' do
+      Note.new('C4').perfect_fourth.note_string.should == 'F4'
+      Note.new('B4').perfect_fourth.note_string.should == 'E5'
     end
 
     describe '#diminished_fifth' do
@@ -177,6 +192,11 @@ describe Music::Note do
       Note.new('B4').augmented_fifth.note_string.should == 'G5'
     end
 
+    describe '#major_sixth' do
+      Note.new('C4').major_sixth.note_string.should == 'A4'
+      Note.new('B4').major_sixth.note_string.should == 'G#5'
+    end
+
     describe '#diminished_seventh' do
       Note.new('C4').diminished_seventh.note_string.should == 'A4'
       Note.new('B4').diminished_seventh.note_string.should == 'G#5'
@@ -190,6 +210,30 @@ describe Music::Note do
     describe '#major_seventh' do
       Note.new('C4').major_seventh.note_string.should == 'B4'
       Note.new('B4').major_seventh.note_string.should == 'A#5'
+    end
+  end
+
+  describe 'scales from notes (as scale key)' do
+    describe '#major_scale' do
+      Note.new('C4').major_scale.should == [
+        Note.new('C4'),
+        Note.new('D4'),
+        Note.new('E4'),
+        Note.new('F4'),
+        Note.new('G4'),
+        Note.new('A4'),
+        Note.new('B4')
+      ]
+
+      Note.new('G4').major_scale.should == [
+        Note.new('G4'),
+        Note.new('A4'),
+        Note.new('B4'),
+        Note.new('C5'),
+        Note.new('D5'),
+        Note.new('E5'),
+        Note.new('F#5')
+      ]
     end
   end
 
