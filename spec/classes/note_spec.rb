@@ -184,8 +184,11 @@ describe Music::Note do
     it { c4.should have_an_interval :perfect_fifth, 'G4' }
     it { b4.should have_an_interval :perfect_fifth, 'F#5' }
 
+    # Enharmonic equivalents
     it { c4.should have_an_interval :augmented_fifth, 'G#4' }
     it { b4.should have_an_interval :augmented_fifth, 'G5' }
+    it { c4.should have_an_interval :minor_sixth, 'G#4' }
+    it { b4.should have_an_interval :minor_sixth, 'G5' }
 
     it { c4.should have_an_interval :major_sixth, 'A4' }
     it { b4.should have_an_interval :major_sixth, 'G#5' }
@@ -221,6 +224,28 @@ describe Music::Note do
         Note.new('D5'),
         Note.new('E5'),
         Note.new('F#5')
+      ]
+    end
+
+    describe '#minor_scale' do
+      Note.new('C4').minor_scale.should == [
+        Note.new('C4'),
+        Note.new('D4'),
+        Note.new('D#4'),
+        Note.new('F4'),
+        Note.new('G4'),
+        Note.new('G#4'),
+        Note.new('A#4')
+      ]
+
+      Note.new('G4').minor_scale.should == [
+        Note.new('G4'),
+        Note.new('A4'),
+        Note.new('A#4'),
+        Note.new('C5'),
+        Note.new('D5'),
+        Note.new('D#5'),
+        Note.new('F5')
       ]
     end
   end

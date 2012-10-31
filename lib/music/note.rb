@@ -69,7 +69,7 @@ module Music
 
       :tritone => 6, :diminished_fifth => 6, :flat_fifth => 6, :augmented_fourth => 6,
       :perfect_fifth => 7,
-      :augmented_fifth => 8,
+      :augmented_fifth => 8, :minor_sixth => 8,
 
       :major_sixth => 9, :diminished_seventh => 9,
       :minor_seventh => 10,
@@ -88,6 +88,17 @@ module Music
         self.perfect_fifth,
         self.major_sixth,
         self.major_seventh,
+      ]
+    end
+
+    def minor_scale
+      [self,
+        self.major_second,
+        self.minor_third,
+        self.perfect_fourth,
+        self.perfect_fifth,
+        self.minor_sixth,
+        self.minor_seventh,
       ]
     end
 
