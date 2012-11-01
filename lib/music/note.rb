@@ -17,6 +17,11 @@ module Music
       self.frequency <=> other_note.frequency
     end
 
+    # Creates a new note
+    #
+    # @param [String, Numeric] descriptor Either a string describing the note (e.g. 'C#4') or a number giving the note's frequency (e.g. 440)
+    # @param [Numeric, nil] assumed_octave If no octive is given in the descriptor, use this
+    # @returns [Note] Note specified
     def initialize(descriptor, assumed_octave = nil)
       self.frequency = if descriptor.is_a? Numeric
         Note.nearest_note_frequency(descriptor)
@@ -112,6 +117,9 @@ module Music
       end
     end
 
+    # Uses note as key to give major scale
+    #
+    # @returns [Array[Note]] Notes in major scale
     def major_scale
       [self,
         self.major_second,
@@ -123,6 +131,9 @@ module Music
       ]
     end
 
+    # Uses note as key to give minor scale
+    #
+    # @returns [Array[Note]] Notes in minor scale
     def minor_scale
       [self,
         self.major_second,
