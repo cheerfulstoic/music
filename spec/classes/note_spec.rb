@@ -255,6 +255,7 @@ describe Music::Note do
     
     c_minor = Chord.new(['C4', 'Eb4', 'G4'])
     c_major = Chord.new(['C4', 'E4', 'G4'])
+    c_fifth = Chord.new(['C4', 'G4'])
     c_diminished = Chord.new(['C4', 'Eb4', 'Gb4'])
     c_augmented = Chord.new(['C4', 'E4', 'G#4'])
     c_major_seventh = Chord.new(['C4', 'E4', 'G4', 'B4'])
@@ -282,6 +283,18 @@ describe Music::Note do
           c4.chord('MAJ').should == c_major
           c4.chord('M').should == c_major
           c4.chord('').should == c_major
+        end
+
+        it 'should recognize power chords' do
+          c4.chord(:power).should == c_fifth
+          c4.chord(:fifth).should == c_fifth
+          c4.chord('Power').should == c_fifth
+          c4.chord('power').should == c_fifth
+          c4.chord('Fifth').should == c_fifth
+          c4.chord('fifth').should == c_fifth
+          c4.chord('pow').should == c_fifth
+          c4.chord('POW').should == c_fifth
+          c4.chord('5').should == c_fifth
         end
 
         it 'should recognize diminished chords' do
