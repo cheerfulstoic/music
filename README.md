@@ -49,6 +49,8 @@ TODOs:
 ======
 
  * Use the term musical term 'interval' or 'semitones' instead of 'distance' in code
+ * 'C-' can be used to represent C minor
+ * There can be many versions of chords.  See: http://giventowail.com/lessons/evan/the-basics-major-minor-and-power-chords?phpMyAdmin=97715a053dab6cd797cf01c69d7492a4
 
 Contributing to music
 =====================
