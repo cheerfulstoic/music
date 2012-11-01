@@ -28,7 +28,7 @@ module Music
     # Returns string representing note with letter, accidental, and octave number
     # e.g. 'C#5'
     #
-    # @param [boolean] give_flat Should the result give a flat (defults to giving a sharp)
+    # @param [boolean] give_flat Should the result give a flat? (defults to giving a sharp)
     # @return [String] The resulting note string
     def note_string(give_flat = false)
       Note.calculate_note(self.frequency, give_flat).join
@@ -37,33 +37,55 @@ module Music
     # Returns the letter portion of the note
     # e.g. 'C'
     #
-    # @param [boolean] give_flat Should the result be based on giving a flat (defaults to giving a sharp)
+    # @param [boolean] give_flat Should the result be based on giving a flat? (defaults to giving a sharp)
     # @return [String] The resulting note letter
     def letter(give_flat = false)
       Note.calculate_note(self.frequency, give_flat)[0]
     end
 
+    # Returns the accidental portion of the note
+    # e.g. '#' or 'b'
+    #
+    # @param [boolean] give_flat Should the result give a flat? (defaults to giving a sharp)
+    # @return [String] The resulting accidental
     def accidental(give_flat = false)
       Note.calculate_note(self.frequency, give_flat)[1]
     end
 
+    # Returns the octive number of the note
+    # e.g. 4
+    #
+    # @return [Fixnum] The resulting octive number
     def octave
       Note.calculate_note(self.frequency)[2]
     end
 
-    def pred
+    # Return the previous note (adjusted by one semitone down)
+    #
+    # @return [Note] The previous note
+    def prev
       Note.new(Note.frequency_adjustment(self.frequency, -1))
     end
 
+    # Return the next note (adjusted by one semitone up)
+    #
+    # @return [Note] The next note
     def succ
       Note.new(Note.frequency_adjustment(self.frequency, 1))
     end
     alias :next :succ
 
+    # Return the distance (in semitones) to a note
+    #
+    # @return [Fixnum] Number of semitones
     def distance_to(note)
       Note.note_distance(self.note_string, note.note_string)
     end
 
+    # Return another note adjusted by a given interval
+    #
+    # @param [Fixnum] interval Number of semitones to adjust by
+    # @return [Note] Resulting note after adjustment
     def adjust_by_semitones(interval)
       Note.new(Note.frequency_adjustment(self.frequency, interval))
     end

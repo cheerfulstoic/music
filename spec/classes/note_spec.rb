@@ -560,7 +560,7 @@ describe Music::Note do
     end
 
     it "should allow getting of previous note" do
-      Note.new(739.99).pred.should == Note.new(698.46)
+      Note.new(739.99).prev.should == Note.new(698.46)
     end
   end
 end
