@@ -25,6 +25,11 @@ module Music
       end
     end
 
+    # Returns string representing note with letter, accidental, and octave number
+    # e.g. C#5
+    #
+    # @params [boolean] give_flat Should the result give a flat (defults to giving a sharp)
+    # @return [String] The resulting note string
     def note_string(give_flat = false)
       Note.calculate_note(self.frequency, give_flat).join
     end
