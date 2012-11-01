@@ -119,7 +119,7 @@ module Music
 
     # Uses note as key to give major scale
     #
-    # @returns [Array[Note]] Notes in major scale
+    # @returns [Array<Note>] Notes in major scale
     def major_scale
       [self,
         self.major_second,
@@ -133,7 +133,7 @@ module Music
 
     # Uses note as key to give minor scale
     #
-    # @returns [Array[Note]] Notes in minor scale
+    # @returns [Array<Note>] Notes in minor scale
     def minor_scale
       [self,
         self.major_second,
