@@ -41,7 +41,9 @@ Describe chords:
 
     Chord.new(['C4', 'Eb4', 'Gb4'])     # => ['C', :diminished]
 
-*For further usage, see the examples in the spec files*
+*For further usage:*
+ * Docs: [http://rubydoc.info/github/cheerfulstoic/music/frames]
+ * See the examples in the spec files
 
 TODOs:
 ======
