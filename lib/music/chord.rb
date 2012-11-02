@@ -64,12 +64,18 @@ module Music
       @notes.to_a.sort.collect(&:to_s).join(' / ')
     end
 
+    # Give the first inversion of the chord which simply adjusts the lowest note up by one octive
+    #
+    # @returns [Chord] The first inversion of chord
     def first_inversion
       note_array = @notes.to_a.sort
       note = note_array.shift
       Chord.new([note.adjust_by_semitones(12)] + note_array)
     end
 
+    # Give the first inversion of the chord which simply adjusts the lowest two notes up by one octive
+    #
+    # @returns [Chord] The second inversion of chord
     def second_inversion
       self.first_inversion.first_inversion
     end
