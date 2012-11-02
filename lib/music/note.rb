@@ -23,6 +23,10 @@ module Music
       self.frequency == other_note.frequency
     end
 
+    def to_s
+      self.note_string
+    end
+
     # Creates a new note
     #
     # @param [String, Numeric] descriptor Either a string describing the note (e.g. 'C#4') or a number giving the note's frequency (e.g. 440)

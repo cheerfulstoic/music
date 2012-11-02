@@ -250,6 +250,17 @@ describe Music::Note do
     end
   end
 
+  describe '#to_s' do
+    it 'should output the note_string' do
+      Note.new('E4').to_s.should == 'E4'
+    end
+
+    it 'should use the sharp version' do
+      Note.new('D#5').to_s.should == 'D#5'
+      Note.new('Eb5').to_s.should == 'D#5'
+    end
+  end
+
   describe 'chords from notes' do
     c4 = Note.new('C4')
     

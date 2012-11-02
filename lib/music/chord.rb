@@ -60,6 +60,10 @@ module Music
       [note_array.first.letter, quality]
     end
 
+    def to_s
+      @notes.to_a.sort.collect(&:to_s).join(' / ')
+    end
+
     def first_inversion
       note_array = @notes.to_a.sort
       note = note_array.shift

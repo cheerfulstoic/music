@@ -39,6 +39,12 @@ describe Music::Chord do
     end
   end
 
+  describe '#to_s' do
+    it 'should output just the sorted note descriptions separated by slashes' do
+      @c_minor.to_s.should == 'C4 / D#4 / G4'
+    end
+  end
+
   describe '#describe' do
     describe "triads" do
       it 'should recognize C major' do
