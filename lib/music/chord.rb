@@ -14,13 +14,13 @@ module Music
     attr_reader :notes
 
     def initialize(notes)
-      @notes = Set.new(notes.collect do |note|
+      @notes = Set.new(notes) do |note|
         if note.is_a?(Note)
           note
         else
           Note.new(note)
         end
-      end)
+      end
     end
 
     # Spec and implement
