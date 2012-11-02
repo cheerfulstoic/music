@@ -17,7 +17,7 @@ module Music
       self.frequency <=> other_note.frequency
     end
     def hash
-      self.frequency
+      self.frequency.hash
     end
     def eql?(other_note)
       self.frequency == other_note.frequency
