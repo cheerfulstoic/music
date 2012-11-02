@@ -57,7 +57,7 @@ module Music
         :augmented_7
       end
 
-      [@notes.first.letter, quality]
+      [note_array.first.letter, quality]
     end
 
     def first_inversion
