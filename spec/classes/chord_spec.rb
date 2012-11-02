@@ -23,17 +23,19 @@ describe Music::Chord do
     it 'should take an array of note strings' do
       Chord.new(@standard_tuning_notes.collect(&:note_string))
     end
+  end
 
-    it 'should sort the notes by frequency' do
-      Chord.new(['A2', 'E2']).note_strings.should == ['E2', 'A2']
+  describe '#==' do
+    it 'should recognize that the order of notes in the chord does not matter' do
+      Chord.new(['C4', 'Eb4', 'G4']).should == Chord.new(['G4', 'Eb4', 'C4'])
     end
   end
 
   describe '#note_strings' do
-    it 'should return an array of note strings' do
+    it 'should return a set of note strings' do
       chord = Chord.new(@standard_tuning_notes)
 
-      chord.note_strings.should == @standard_tuning_notes.collect(&:note_string)
+      chord.note_strings.should == Set.new(@standard_tuning_notes.collect(&:note_string))
     end
   end
 
@@ -122,5 +124,13 @@ describe Music::Chord do
     end
 
     # TODO: Fill out other chords
+  end
+
+  describe '#first_inversion' do
+    it 'should adjust the lowest note up an octive' do
+      @c_major.first_inversion.should == Chord.new(['E4', 'G4', 'C5'])
+
+      Chord.new(['Eb4', 'C4', 'Gb4']).first_inversion.should == Chord.new(['Eb4', 'C5', 'Gb4'])
+    end
   end
 end

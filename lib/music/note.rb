@@ -16,6 +16,12 @@ module Music
     def <=>(other_note)
       self.frequency <=> other_note.frequency
     end
+    def hash
+      self.frequency
+    end
+    def eql?(other_note)
+      self.frequency == other_note.frequency
+    end
 
     # Creates a new note
     #
