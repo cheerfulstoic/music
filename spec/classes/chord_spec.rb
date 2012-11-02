@@ -133,10 +133,18 @@ describe Music::Chord do
   end
 
   describe '#first_inversion' do
-    it 'should adjust the lowest note up an octive' do
+    it 'should adjust the lowest note up by an octive' do
       @c_major.first_inversion.should == Chord.new(['E4', 'G4', 'C5'])
 
       Chord.new(['Eb4', 'C4', 'Gb4']).first_inversion.should == Chord.new(['Eb4', 'C5', 'Gb4'])
+    end
+  end
+
+  describe '#second_inversion' do
+    it 'should adjust the lowest two notes up by an octive' do
+      @c_major.second_inversion.should == Chord.new(['E5', 'G4', 'C5'])
+
+      Chord.new(['Eb4', 'C4', 'Gb4']).second_inversion.should == Chord.new(['Eb5', 'C5', 'Gb4'])
     end
   end
 end

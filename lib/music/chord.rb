@@ -70,6 +70,10 @@ module Music
       Chord.new([note.adjust_by_semitones(12)] + note_array)
     end
 
+    def second_inversion
+      self.first_inversion.first_inversion
+    end
+
     class << self
       def parse_chord_string(chord_string, assumed_octave = nil)
         if note_string_match = chord_string.match(/^([A-Ga-g])([#b]?)([^\d]*)(\d*)$/)
