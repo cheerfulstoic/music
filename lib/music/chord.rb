@@ -14,6 +14,7 @@ module Music
     attr_reader :notes
 
     def initialize(notes)
+      raise ArgumentError, 'Chords must have at least two notes' if notes.size < 2
       @notes = Set.new(notes) do |note|
         if note.is_a?(Note)
           note

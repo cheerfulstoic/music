@@ -23,6 +23,10 @@ describe Music::Chord do
     it 'should take an array of note strings' do
       Chord.new(@standard_tuning_notes.collect(&:note_string))
     end
+
+    it 'should validate that chords must have at least two notes' do
+      lambda { Chord.new(['C4']) }.should raise_error(ArgumentError, 'Chords must have at least two notes')
+    end
   end
 
   describe '#==' do
