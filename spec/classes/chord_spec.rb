@@ -26,6 +26,7 @@ describe Music::Chord do
 
     it 'should validate that chords must have at least two notes' do
       lambda { Chord.new(['C4']) }.should raise_error(ArgumentError, 'Chords must have at least two notes')
+      lambda { Chord.new([]) }.should raise_error(ArgumentError, 'Chords must have at least two notes')
     end
   end
 
