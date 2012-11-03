@@ -137,19 +137,46 @@ describe Music::Chord do
     # TODO: Fill out other chords
   end
 
+  describe '#inversion' do
+    it 'should adjust the lowest n notes up by an octive' do
+      @c_major.inversion(1).should == Chord.new(['E4', 'G4', 'C5'])
+      Chord.new(['Eb4', 'C4', 'Gb4']).inversion(1).should == Chord.new(['Eb4', 'C5', 'Gb4'])
+
+      @c_major.inversion(2).should == Chord.new(['E5', 'G4', 'C5'])
+      Chord.new(['Eb4', 'C4', 'Gb4']).inversion(2).should == Chord.new(['Eb5', 'C5', 'Gb4'])
+
+      @c_augmented_seventh.inversion(3).should == Chord.new(['E5', 'G#5', 'C5', 'Bb4'])
+    end
+
+    it 'should raise an error when the inversion amount is too great' do
+      lambda { @c_major.inversion(3) }.should raise_error(ArgumentError, 'Not enough notes in chord for inversion')
+      lambda { @c_major.inversion(4) }.should raise_error(ArgumentError, 'Not enough notes in chord for inversion')
+
+      lambda { @c_augmented_seventh.inversion(4) }.should raise_error(ArgumentError, 'Not enough notes in chord for inversion')
+      lambda { @c_augmented_seventh.inversion(5) }.should raise_error(ArgumentError, 'Not enough notes in chord for inversion')
+    end
+
+    it 'should raise an error when the inversion amount is too small' do
+      lambda { @c_major.inversion(0) }.should raise_error(ArgumentError, 'Inversion amount must be greater than or equal to 1')
+      lambda { @c_major.inversion(-1) }.should raise_error(ArgumentError, 'Inversion amount must be greater than or equal to 1')
+    end
+  end
+
   describe '#first_inversion' do
     it 'should adjust the lowest note up by an octive' do
       @c_major.first_inversion.should == Chord.new(['E4', 'G4', 'C5'])
-
-      Chord.new(['Eb4', 'C4', 'Gb4']).first_inversion.should == Chord.new(['Eb4', 'C5', 'Gb4'])
     end
   end
 
   describe '#second_inversion' do
     it 'should adjust the lowest two notes up by an octive' do
       @c_major.second_inversion.should == Chord.new(['E5', 'G4', 'C5'])
+    end
+  end
 
-      Chord.new(['Eb4', 'C4', 'Gb4']).second_inversion.should == Chord.new(['Eb5', 'C5', 'Gb4'])
+  describe '#third_inversion' do
+    it 'should adjust the lowest three notes up by an octive' do
+      @c_augmented_seventh.third_inversion.should == Chord.new(['E5', 'G#5', 'C5', 'Bb4'])
     end
   end
 end

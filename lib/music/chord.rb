@@ -65,20 +65,31 @@ module Music
       @notes.to_a.sort.collect(&:to_s).join(' / ')
     end
 
-    # Give the first inversion of the chord which simply adjusts the lowest note up by one octive
+    # Give the Nth inversion of the chord which simply adjusts the lowest N notes up by one octive
     #
-    # @returns [Chord] The first inversion of chord
-    def first_inversion
+    # @returns [Chord] The specified inversion of chord
+    def inversion(amount)
+      raise ArgumentError, "Inversion amount must be greater than or equal to 1" if amount < 1
+      raise ArgumentError, "Not enough notes in chord for inversion" if amount >= @notes.size
+
       note_array = @notes.to_a.sort
-      note = note_array.shift
-      Chord.new([note.adjust_by_semitones(12)] + note_array)
+      notes = (0...amount).collect { note_array.shift.adjust_by_semitones(12) }
+      Chord.new(notes + note_array)
     end
 
-    # Give the first inversion of the chord which simply adjusts the lowest two notes up by one octive
-    #
-    # @returns [Chord] The second inversion of chord
+    # Calls inversion(1)
+    def first_inversion
+      self.inversion(1)
+    end
+
+    # Calls inversion(2)
     def second_inversion
-      self.first_inversion.first_inversion
+      self.inversion(2)
+    end
+
+    # Calls inversion(3)
+    def third_inversion
+      self.inversion(3)
     end
 
     class << self
