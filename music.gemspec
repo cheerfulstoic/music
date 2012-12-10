@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.8"
 
   # Dependencies
+  s.add_dependency              "activemodel", "~> 3.2"
   s.add_development_dependency  "rake", ">= 0.9"
   s.add_development_dependency  "bundler", ">= 1.1.3"
   s.add_development_dependency  "rspec"
