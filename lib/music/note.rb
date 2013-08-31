@@ -1,5 +1,4 @@
 require 'active_model'
-require 'music/patches/hash'
 
 module Music
   class Note
