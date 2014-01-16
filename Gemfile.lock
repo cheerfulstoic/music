@@ -2,18 +2,10 @@ PATH
   remote: .
   specs:
     music (0.6.2)
-      activemodel (~> 3.2)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (3.2.12)
-      activesupport (= 3.2.12)
-      builder (~> 3.0.0)
-    activesupport (3.2.12)
-      i18n (~> 0.6)
-      multi_json (~> 1.0)
-    builder (3.0.4)
     coderay (1.0.9)
     diff-lcs (1.2.1)
     guard (1.6.2)
@@ -28,11 +20,9 @@ GEM
     guard-rspec (2.4.1)
       guard (>= 1.1)
       rspec (~> 2.11)
-    i18n (0.6.1)
     listen (0.7.3)
     lumberjack (1.0.2)
     method_source (0.8.1)
-    multi_json (1.6.1)
     pry (0.9.12)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -55,7 +45,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activemodel (~> 3.2.0)
   bundler (~> 1.2.4)
   guard-bundler
   guard-rspec
