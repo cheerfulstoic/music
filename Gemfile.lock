@@ -56,7 +56,6 @@ PLATFORMS
 
 DEPENDENCIES
   activemodel (~> 3.2.0)
-  bundler (~> 1.2.4)
   guard-bundler
   guard-rspec
   music!
