@@ -97,7 +97,7 @@ module Music
         if note_string_match = chord_string.match(/^([A-Ga-g])([#b]?)([^\d]*)(\d*)$/)
           full_string, note, accidental, interval, octave = note_string_match.to_a
 
-          raise ArgumentError, 'No octave found and no octave assumed' if note.blank? && assumed_octave.nil?
+          raise ArgumentError, 'No octave found and no octave assumed' if note.empty? && assumed_octave.nil?
 
           Note.new(note + accidental + octave, assumed_octave).chord(interval)
         end

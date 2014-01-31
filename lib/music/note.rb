@@ -1,15 +1,10 @@
-require 'active_model'
-
 module Music
   class Note
-    include ActiveModel::Validations
 
     NOTES = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B']
     NOTE_STRINGS = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'Gb', 'G', 'G#']
 
     attr_accessor :frequency
-
-    validates_presence_of :frequency
 
     include Comparable
     def <=>(other_note)
@@ -227,7 +222,7 @@ module Music
     }
 
     def chord(description)
-      description = :major if description.blank?
+      description = :major if description.empty?
 
       description = description.to_s
       description.downcase! unless ['M', 'M7'].include?(description)
@@ -248,16 +243,14 @@ module Music
     end
 
     class << self
-      extend ActiveSupport::Memoizable
-
       def parse_note_string(note_string, assumed_octave = nil)
         match = note_string.match(/^([A-Ga-g])([#b]?)([0-8]?)$/)
 
         raise ArgumentError, "Did not recognize note string: #{note_string}" if !match
-        raise ArgumentError, "No octave found or specified" if match[3].blank? && assumed_octave.nil?
+        raise ArgumentError, "No octave found or specified" if match[3].empty? && assumed_octave.nil?
         raise ArgumentError if match[3].to_i > 8 || (assumed_octave && !(0..8).include?(assumed_octave))
 
-        octave = match[3].present? ? match[3] : assumed_octave
+        octave = match[3].empty? ? assumed_octave : match[3]
         [match[1].upcase, match[2] == '' ? nil : match[2], octave.to_i]
       end
 
