@@ -222,7 +222,7 @@ module Music
     }
 
     def chord(description)
-      description = :major if description.empty?
+      description = :major if description.to_s.empty?
 
       description = description.to_s
       description.downcase! unless ['M', 'M7'].include?(description)
