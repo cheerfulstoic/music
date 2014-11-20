@@ -8,6 +8,8 @@ The *music* gem provides a means on calculating notes and chords.
 Examples:
 ---------
 
+All examples below assume that `include Music` has been called, though you can also use `Music::Note`, `Music::Chord`, etc...
+
 Creating notes:
 
     note = Note.new(698.46) # Creates a note object with the frequency 698.46
