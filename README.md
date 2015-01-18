@@ -5,6 +5,8 @@ The *music* gem provides a means on calculating notes and chords.
 
 [![Build Status](https://travis-ci.org/cheerfulstoic/music.png)](https://travis-ci.org/cheerfulstoic/music)
 
+[![PullReview stats](https://www.pullreview.com/github/cheerfulstoic/music/badges/master.svg?)](https://www.pullreview.com/github/cheerfulstoic/music/reviews/master)
+
 Examples:
 ---------
 
