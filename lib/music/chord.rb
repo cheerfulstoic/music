@@ -1,3 +1,5 @@
+require 'set'
+
 module Music
   class Chord
 
@@ -15,7 +17,7 @@ module Music
 
     def initialize(notes)
       raise ArgumentError, 'Chords must have at least two notes' if notes.size < 2
-      @notes = Set.new(notes) do |note|
+      @notes = ::Set.new(notes) do |note|
         if note.is_a?(Note)
           note
         else
@@ -28,7 +30,7 @@ module Music
     # def to_i
 
     def note_strings
-      Set.new(@notes.collect(&:note_string))
+      ::Set.new(@notes.collect(&:note_string))
     end
 
     def describe
