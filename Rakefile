@@ -1,10 +1,10 @@
 require 'rake'
 require 'rspec/core/rake_task'
 
-task :default => [:spec]
+task default: [:spec]
 
 desc "Run all test"
-task :test => [:spec]
+task test: [:spec]
 
 # RSpec tasks
 desc "Run all examples"
