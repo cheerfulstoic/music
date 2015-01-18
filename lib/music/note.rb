@@ -1,20 +1,21 @@
 module Music
   class Note
-
     NOTES = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B']
     NOTE_STRINGS = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'Gb', 'G', 'G#']
 
     attr_accessor :frequency
 
     include Comparable
-    def <=>(other_note)
-      self.frequency <=> other_note.frequency
+    def <=>(other)
+      self.frequency <=> other.frequency
     end
+
     def hash
       self.frequency.hash
     end
-    def eql?(other_note)
-      self.frequency == other_note.frequency
+
+    def eql?(other)
+      self.frequency == other.frequency
     end
 
     def to_s
@@ -28,10 +29,10 @@ module Music
     # @returns [Note] Note specified
     def initialize(descriptor, assumed_octave = nil)
       self.frequency = if descriptor.is_a? Numeric
-        Note.nearest_note_frequency(descriptor)
-      else
-        Note.calculate_frequency(descriptor, assumed_octave)
-      end
+                         Note.nearest_note_frequency(descriptor)
+                       else
+                         Note.calculate_frequency(descriptor, assumed_octave)
+                       end
     end
 
     # Returns string representing note with letter, accidental, and octave number
@@ -82,7 +83,7 @@ module Music
     def succ
       Note.new(Note.frequency_adjustment(self.frequency, 1))
     end
-    alias :next :succ
+    alias_method :next, :succ
 
     # Return the distance (in semitones) to a note
     #
@@ -126,12 +127,12 @@ module Music
     # @returns [Array<Note>] Notes in major scale
     def major_scale
       [self,
-        self.major_second,
-        self.major_third,
-        self.perfect_fourth,
-        self.perfect_fifth,
-        self.major_sixth,
-        self.major_seventh,
+       self.major_second,
+       self.major_third,
+       self.perfect_fourth,
+       self.perfect_fifth,
+       self.major_sixth,
+       self.major_seventh
       ]
     end
 
@@ -140,12 +141,12 @@ module Music
     # @returns [Array<Note>] Notes in minor scale
     def minor_scale
       [self,
-        self.major_second,
-        self.minor_third,
-        self.perfect_fourth,
-        self.perfect_fifth,
-        self.minor_sixth,
-        self.minor_seventh,
+       self.major_second,
+       self.minor_third,
+       self.perfect_fourth,
+       self.perfect_fifth,
+       self.minor_sixth,
+       self.minor_seventh
       ]
     end
 
@@ -218,21 +219,21 @@ module Music
       :half_dim_7 => :half_diminished_seventh,
       :half_dim_7th => :half_diminished_seventh,
       :half_dim7 => :half_diminished_seventh,
-      :half_dim7th => :half_diminished_seventh,
+      :half_dim7th => :half_diminished_seventh
     }
 
     def chord(description)
       description = :major if description.to_s.empty?
 
       description = description.to_s
-      description.downcase! unless ['M', 'M7'].include?(description)
+      description.downcase! unless %w(M M7).include?(description)
       description.gsub!(/[\s\-]+/, '_')
       description = description.to_sym
 
       intervals = CHORD_INTERVALS[description] || CHORD_INTERVALS[CHORD_ALIASES[description]]
 
       if intervals
-        Chord.new([self] + intervals.collect {|interval| self.send(interval) })
+        Chord.new([self] + intervals.collect { |interval| self.send(interval) })
       end
     end
 
@@ -246,9 +247,9 @@ module Music
       def parse_note_string(note_string, assumed_octave = nil)
         match = note_string.match(/^([A-Ga-g])([#b]?)([0-8]?)$/)
 
-        raise ArgumentError, "Did not recognize note string: #{note_string}" if !match
-        raise ArgumentError, "No octave found or specified" if match[3].empty? && assumed_octave.nil?
-        raise ArgumentError if match[3].to_i > 8 || (assumed_octave && !(0..8).include?(assumed_octave))
+        fail ArgumentError, "Did not recognize note string: #{note_string}" if !match
+        fail ArgumentError, 'No octave found or specified' if match[3].empty? && assumed_octave.nil?
+        fail ArgumentError if match[3].to_i > 8 || (assumed_octave && !(0..8).include?(assumed_octave))
 
         octave = match[3].empty? ? assumed_octave : match[3]
         [match[1].upcase, match[2] == '' ? nil : match[2], octave.to_i]
@@ -258,16 +259,16 @@ module Music
         letter1, accidental1, octave1 = parse_note_string(note_string1)
         letter2, accidental2, octave2 = parse_note_string(note_string2)
 
-        get_index = Proc.new do |letter, accidental|
+        get_index = proc do |letter, accidental|
           NOTES.index do |note|
             regex = case accidental
-            when '#' then
-              /^#{letter}#/
-            when 'b' then
-              /#{letter}b$/
-            else
-              /^#{letter}$/
-            end
+                    when '#' then
+                      /^#{letter}#/
+                    when 'b' then
+                      /#{letter}b$/
+                    else
+                      /^#{letter}$/
+                    end
             note.match(regex)
           end
         end
@@ -279,7 +280,7 @@ module Music
       end
 
       def frequency_adjustment(start_frequency, distance)
-        result = (start_frequency * (2.0 ** (distance.to_f / NOTES.size)))
+        result = (start_frequency * (2.0**(distance.to_f / NOTES.size)))
 
         # Would like to use #round(2), but want to support Ruby 1.8
         (result * 100.0).round / 100.0
@@ -294,7 +295,7 @@ module Music
         when 3
           letter, accidental, octave = args
         else
-          raise ArgumentError, "Invalid octave of arguments"
+          fail ArgumentError, 'Invalid octave of arguments'
         end
 
         distance = note_distance('A4', "#{letter}#{accidental}#{octave}")
@@ -315,12 +316,11 @@ module Music
 
         parts = "#{NOTES[index]}".split('/')
         note = if give_flat
-          parts.last
-        else
-          parts.first
-        end
+                 parts.last
+               else
+                 parts.first
+               end
 
-        "#{note}#{octave}"
         note_parts = note.split('')
         note_parts + (note_parts.size == 1 ? [nil] : []) + [octave.to_i]
       end
@@ -328,7 +328,6 @@ module Music
       def nearest_note_frequency(frequency)
         Note.calculate_frequency(Note.calculate_note(frequency).join)
       end
-
     end
   end
 end
