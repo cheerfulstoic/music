@@ -2,6 +2,7 @@ module Music
   class Note
     NOTES = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B']
     NOTE_STRINGS = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'Gb', 'G', 'G#']
+    ENHARMONICS = {'E#' => 'F', 'Fb' => 'E', 'B#' => 'C', 'Cb' => 'B'}
 
     attr_accessor :frequency
 
@@ -244,7 +245,7 @@ module Music
     end
 
     class << self
-      def parse_note_string(note_string, assumed_octave = nil)
+      def parse_note_string(note_string, assumed_octave = nil, convert_enharmonics = nil)
         match = note_string.match(/^([A-Ga-g])([#b]?)([0-8]?)$/)
 
         fail ArgumentError, "Did not recognize note string: #{note_string}" if !match
@@ -252,12 +253,21 @@ module Music
         fail ArgumentError if match[3].to_i > 8 || (assumed_octave && !(0..8).include?(assumed_octave))
 
         octave = match[3].empty? ? assumed_octave : match[3]
-        [match[1].upcase, match[2] == '' ? nil : match[2], octave.to_i]
+        note_parts = [match[1].upcase, match[2] == '' ? nil : match[2], octave.to_i]
+        convert_enharmonics ? convert_enharmonics(*note_parts) : note_parts
+      end
+
+      def convert_enharmonics(note, accidental, octave)
+        full_note = [note, accidental].join
+        enharmonic_equivalent = ENHARMONICS[full_note]
+        return [note, accidental, octave] unless enharmonic_equivalent
+
+        [enharmonic_equivalent, nil, octave]
       end
 
       def note_distance(note_string1, note_string2)
-        letter1, accidental1, octave1 = parse_note_string(note_string1)
-        letter2, accidental2, octave2 = parse_note_string(note_string2)
+        letter1, accidental1, octave1 = parse_note_string(note_string1, nil, true)
+        letter2, accidental2, octave2 = parse_note_string(note_string2, nil, true)
 
         get_index = proc do |letter, accidental|
           NOTES.index do |note|
