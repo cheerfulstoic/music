@@ -1,8 +1,7 @@
 module Music
   class Note
-    NOTES = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B']
+    NOTES = [['C', 'B#'], ['C#', 'Db'], ['D'], ['D#', 'Eb'], ['E', 'Fb'], ['F', 'E#'], ['F#', 'Gb'], ['G'], ['G#', 'Ab'], ['A'], ['A#', 'Bb'], ['B', 'Cb']]
     NOTE_STRINGS = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'Gb', 'G', 'G#']
-    ENHARMONICS = {'E#' => 'F', 'Fb' => 'E', 'B#' => 'C', 'Cb' => 'B'}
 
     attr_accessor :frequency
 
@@ -245,7 +244,7 @@ module Music
     end
 
     class << self
-      def parse_note_string(note_string, assumed_octave = nil, convert_enharmonics = nil)
+      def parse_note_string(note_string, assumed_octave = nil)
         match = note_string.match(/^([A-Ga-g])([#b]?)([0-8]?)$/)
 
         fail ArgumentError, "Did not recognize note string: #{note_string}" if !match
@@ -253,33 +252,16 @@ module Music
         fail ArgumentError if match[3].to_i > 8 || (assumed_octave && !(0..8).include?(assumed_octave))
 
         octave = match[3].empty? ? assumed_octave : match[3]
-        note_parts = [match[1].upcase, match[2] == '' ? nil : match[2], octave.to_i]
-        convert_enharmonics ? convert_enharmonics(*note_parts) : note_parts
-      end
-
-      def convert_enharmonics(note, accidental, octave)
-        full_note = [note, accidental].join
-        enharmonic_equivalent = ENHARMONICS[full_note]
-        return [note, accidental, octave] unless enharmonic_equivalent
-
-        [enharmonic_equivalent, nil, octave]
+        [match[1].upcase, match[2] == '' ? nil : match[2], octave.to_i]
       end
 
       def note_distance(note_string1, note_string2)
-        letter1, accidental1, octave1 = parse_note_string(note_string1, nil, true)
-        letter2, accidental2, octave2 = parse_note_string(note_string2, nil, true)
+        letter1, accidental1, octave1 = parse_note_string(note_string1)
+        letter2, accidental2, octave2 = parse_note_string(note_string2)
 
         get_index = proc do |letter, accidental|
-          NOTES.index do |note|
-            regex = case accidental
-                    when '#' then
-                      /^#{letter}#/
-                    when 'b' then
-                      /#{letter}b$/
-                    else
-                      /^#{letter}$/
-                    end
-            note.match(regex)
+          NOTES.index do |notes|
+            notes.include?("#{letter}#{accidental}")
           end
         end
 
@@ -324,11 +306,10 @@ module Music
         octave = 4 + (index / NOTES.size) # 4 is because we're using A4
         index = (index % NOTES.size)
 
-        parts = "#{NOTES[index]}".split('/')
         note = if give_flat
-                 parts.last
+                 NOTES[index].last
                else
-                 parts.first
+                 NOTES[index].first
                end
 
         note_parts = note.split('')
