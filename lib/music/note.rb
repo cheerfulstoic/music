@@ -1,6 +1,6 @@
 module Music
   class Note
-    NOTES = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B']
+    NOTES = [['C', 'B#'], ['C#', 'Db'], ['D'], ['D#', 'Eb'], ['E', 'Fb'], ['F', 'E#'], ['F#', 'Gb'], ['G'], ['G#', 'Ab'], ['A'], ['A#', 'Bb'], ['B', 'Cb']]
     NOTE_STRINGS = ['Ab', 'A', 'A#', 'Bb', 'B', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F', 'Gb', 'G', 'G#']
 
     attr_accessor :frequency
@@ -260,16 +260,8 @@ module Music
         letter2, accidental2, octave2 = parse_note_string(note_string2)
 
         get_index = proc do |letter, accidental|
-          NOTES.index do |note|
-            regex = case accidental
-                    when '#' then
-                      /^#{letter}#/
-                    when 'b' then
-                      /#{letter}b$/
-                    else
-                      /^#{letter}$/
-                    end
-            note.match(regex)
+          NOTES.index do |notes|
+            notes.include?("#{letter}#{accidental}")
           end
         end
 
@@ -314,11 +306,10 @@ module Music
         octave = 4 + (index / NOTES.size) # 4 is because we're using A4
         index = (index % NOTES.size)
 
-        parts = "#{NOTES[index]}".split('/')
         note = if give_flat
-                 parts.last
+                 NOTES[index].last
                else
-                 parts.first
+                 NOTES[index].first
                end
 
         note_parts = note.split('')

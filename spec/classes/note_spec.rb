@@ -12,6 +12,13 @@ describe Music::Note do
       Note.new(698.46).note_string.should eq('F5')
       Note.new(1975.53).note_string.should eq('B6')
     end
+
+    it 'should allow enharmonic note strings to initialize notes' do
+      Note.new('E#5').frequency.should eq(Note.new('F5').frequency)
+      Note.new('Fb5').frequency.should eq(Note.new('E5').frequency)
+      Note.new('B#5').frequency.should eq(Note.new('C5').frequency)
+      Note.new('Cb5').frequency.should eq(Note.new('B5').frequency)
+    end
   end
 
   describe 'Comparing notes' do
